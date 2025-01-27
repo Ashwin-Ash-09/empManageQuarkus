@@ -14,7 +14,7 @@ This system supports various features such as assigning employees to departments
 - **Employee-Manager Relationship**: Link employees with their respective managers.
 - **Pagination**: Retrieve employee lists with pagination.
 - **Public Access**: Public endpoints such as `GET /employee/hello` for a simple greeting message.
-  
+
 ## Technologies Used
 
 - **Jakarta EE (Jakarta RESTful Web Services)**: For building REST APIs.
@@ -25,23 +25,40 @@ This system supports various features such as assigning employees to departments
 - **Panache**: A simplified approach to interacting with databases using **PanacheEntityBase**.
 - **H2 Database**: In-memory database for testing and development (can be swapped with MySQL or another database for production).
 - **Maven**: For dependency management and project builds.
-  
+
+## Extensions Used
+
+The project utilizes the following Quarkus extensions:
+
+- `quarkus-arc`: Dependency injection and CDI support.
+- `quarkus-hibernate-orm`: ORM support with Hibernate.
+- `quarkus-jdbc-postgresql`: PostgreSQL database connectivity.
+- `quarkus-hibernate-orm-panache`: Simplified database access using Panache.
+- `quarkus-resteasy`: RESTful API support with JAX-RS.
+- `quarkus-resteasy-jackson`: JSON support for REST endpoints.
+- `quarkus-security-jpa`: Security integration using JPA.
+- `quarkus-swagger-ui`: API documentation with Swagger UI.
+- `quarkus-smallrye-openapi`: OpenAPI documentation generation.
+- `quarkus-junit5`: Testing support with JUnit 5.
+- `rest-assured`: Testing REST APIs.
+
 ## Project Structure
 
 ```plaintext
-└── src
-    └── main
-        ├── java
-        │   └── org
-        │       └── empManagement
-        │           ├── EmployeeResource.java
-        │           ├── DepartmentResource.java
-        │           └── Entities
-        │               ├── Employee.java
-        │               └── Department.java
-        └── resources
-            └── META-INF
-                └── persistence.xml
+org.empManagement
+├── Entities
+│ ├── Department.java - Entity class representing a department.
+│ ├── Employee.java - Entity class representing an employee.
+│
+├── repositories
+│ ├── DepartmentRepository.java - Repository interface for department CRUD operations.
+│ ├── EmployeeRepository.java - Repository interface for employee CRUD operations.
+│
+├── service
+│ ├── DepartmentService.java - Business logic for department operations.
+│ ├── EmployeeService.java - Business logic for employee operations.
+│──── DepartmentResource.java - REST controller for department-related API endpoints.
+│──── EmployeeResource.java - REST controller for employee-related API endpoints.
 ```
 
 ## Installation
@@ -83,41 +100,22 @@ Follow these steps to set up the project locally:
 ### Employee Endpoints
 
 - **POST /employee/new**: Add a new employee.
-  - Request Body: `Employee` object in JSON format.
-  - Response: Status and message indicating the result.
-
 - **GET /employee/hello**: A simple public endpoint that returns "Hello World".
-
 - **GET /employee/page-wise**: Retrieve a paginated list of employees.
-  - Query Parameter: `page-number` (integer) – The page number to fetch.
-
 - **GET /employee/page-count**: Get the total number of pages for employee listing.
-
 - **GET /employee/all**: Retrieve a list of all employees.
-
 - **PUT /employee/{id}/update**: Update employee details.
-  - Request Body: Updated `Employee` object in JSON format.
-  - Path Parameter: `id` – The employee's ID.
-
 - **GET /employee/{id}**: Retrieve an employee by their ID.
-
 - **DELETE /employee/{id}/delete**: Delete an employee by their ID.
-
 - **GET /employee/{id}/manager**: Get the manager of a specific employee by their ID.
 
 ### Department Endpoints
 
 - **GET /department**: Get all departments.
-
 - **POST /department**: Add a new department.
-  - Request Body: `Department` object in JSON format.
-
 - **PUT /department/{id}**: Update a department by ID.
-  - Path Parameter: `id` – The ID of the department to update.
 
 ## Example Request and Response
-
-### Add New Employee (POST /employee/new)
 
 Request:
 
@@ -224,8 +222,3 @@ You can use tools like **Postman** or **cURL** to test the API endpoints. For ex
 curl -X GET http://localhost:8080/employee/1
 ```
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
